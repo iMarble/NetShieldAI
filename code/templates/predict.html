@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firewall Prediction</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#predictForm').on('submit', function(event) {
+                event.preventDefault(); // Prevent the default form submission
+                $.ajax({
+                    type: 'POST',
+                    url: '/predict',
+                    data: $(this).serialize(), // Serialize form data
+                    success: function(response) {
+                        alert('Predicted Action: ' + response['Predicted Action']);
+                    },
+                    error: function(error) {
+                        alert('Error: ' + error.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Firewall Prediction</h1>
+    <form id="predictForm">
+        <label for="source_p">Source Port:</label>
+        <input type="text" id="source_p" name="source_p" required><br>
+        <label for="dest_p">Destination Port:</label>
+        <input type="text" id="dest_p" name="dest_p" required><br>
+        <button type="submit">Predict</button>
+    </form>
+</body>
+</html>
